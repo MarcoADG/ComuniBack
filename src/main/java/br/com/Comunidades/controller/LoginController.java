@@ -47,19 +47,20 @@ public class LoginController {
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDTO loginRequest) {
 
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+	    Authentication authentication = authenticationManager.authenticate(
+	            new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = jwtUtils.generateJwtToken(authentication);
+	    SecurityContextHolder.getContext().setAuthentication(authentication);
+	    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+	    String jwt = jwtUtils.generateToken(userDetails.getUsername(), userDetails.getId(), userDetails.getApelido(), userDetails.getCargo());
 
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
-				.collect(Collectors.toList());
+	    List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
+	            .collect(Collectors.toList());
 
-		return ResponseEntity.ok(
-				new JwtResponseDTO(jwt, userDetails.getId(), userDetails.getUsername(), roles));
+	    return ResponseEntity.ok(
+	            new JwtResponseDTO(jwt, userDetails.getId(), userDetails.getUsername(), roles, userDetails.getApelido()));
 	}
+
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequestDTO signUpRequest) {

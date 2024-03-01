@@ -8,12 +8,14 @@ public class JwtResponseDTO {
 	private Integer id;
 	private String username;
 	private List<String> roles;
+	private String apelido;
 
-	public JwtResponseDTO(String accessToken, Integer id, String username, List<String> roles) {
+	public JwtResponseDTO(String accessToken, Integer id, String username, List<String> roles, String apelido) {
 		this.token = accessToken;
 		this.id = id;
 		this.username = username;
 		this.roles = roles;
+		this.apelido = apelido;
 	}
 
 	public String getAccessToken() {
@@ -50,5 +52,9 @@ public class JwtResponseDTO {
 
 	public List<String> getRoles() {
 		return roles;
+	}
+	
+	public String getApelido() {
+		return apelido;
 	}
 }

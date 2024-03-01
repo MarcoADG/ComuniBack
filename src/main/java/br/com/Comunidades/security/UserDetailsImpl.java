@@ -19,6 +19,10 @@ public class UserDetailsImpl implements UserDetails {
 	private Integer id;
 
 	private String username;
+	
+	private String apelido;
+	
+	private String cargo;
 
 	@JsonIgnore
 	private String password;
@@ -26,17 +30,19 @@ public class UserDetailsImpl implements UserDetails {
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public UserDetailsImpl(Integer id, String username, String password,
-			Collection<? extends GrantedAuthority> authorities) {
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.authorities = authorities;
+	        Collection<? extends GrantedAuthority> authorities, String apelido, String cargo) {
+	    this.id = id;
+	    this.username = username;
+	    this.password = password;
+	    this.authorities = authorities;
+	    this.apelido = apelido;
+	    this.cargo = cargo;
 	}
 
 	public static UserDetailsImpl build(Usuario usuario) {
-		CargoEnum cargo = usuario.getCargo();
-		GrantedAuthority authority = new SimpleGrantedAuthority(cargo.name());
-		return new UserDetailsImpl(usuario.getUsuarioId(), usuario.getEmail(), usuario.getSenha(), Collections.singletonList(authority));
+	    CargoEnum cargo = usuario.getCargo();
+	    GrantedAuthority authority = new SimpleGrantedAuthority(cargo.name());
+	    return new UserDetailsImpl(usuario.getUsuarioId(), usuario.getEmail(), usuario.getSenha(), Collections.singletonList(authority), usuario.getApelido(), cargo.name());
 	}
 
 	@Override
@@ -57,6 +63,16 @@ public class UserDetailsImpl implements UserDetails {
 	public String getUsername() {
 		return username;
 	}
+	
+	
+	public String getApelido() {
+        return apelido;
+    }
+	
+	
+	public String getCargo() {
+		return cargo;
+    }
 
 	@Override
 	public boolean isAccountNonExpired() {

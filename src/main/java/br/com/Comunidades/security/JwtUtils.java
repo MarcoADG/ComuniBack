@@ -1,6 +1,5 @@
 package br.com.Comunidades.security;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import javax.crypto.SecretKey;
@@ -8,7 +7,6 @@ import javax.crypto.SecretKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.JwtException;
@@ -25,21 +23,20 @@ public class JwtUtils {
 	@Value("${app.jwt.expiration.ms}")
 	private int jwtExpirationMs;
 	
-	public String generateJwtToken(Authentication authentication) {
-
-		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-		SecretKey sKey = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
-		
-		return Jwts.builder()
-					.setSubject((userPrincipal.getUsername()))
-					.setIssuedAt(new Date())
-					.setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-					.signWith(sKey)
-					.compact();
+	public String generateToken(String username, Integer id, String cargo, String apelido) {
+	    SecretKey secretKeySpec = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+	    return Jwts.builder()
+	            .setSubject(username)
+	            .claim("userId", id)
+	            .claim("apelido", apelido)
+	            .claim("cargo", cargo)
+	            .setExpiration(new Date(System.currentTimeMillis() + this.jwtExpirationMs))
+	            .signWith(secretKeySpec)
+	            .compact();
 	}
 
 	public String getUserNameFromJwtToken(String token) {
-		SecretKey sKey = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
+		SecretKey sKey = Keys.hmacShaKeyFor(jwtSecret.getBytes());
 		return Jwts.parserBuilder()
 				.setSigningKey(sKey)
 				.build()
@@ -49,7 +46,7 @@ public class JwtUtils {
 
 	public boolean validateJwtToken(String authToken) {
 		try {
-			SecretKey sKey = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
+			SecretKey sKey = Keys.hmacShaKeyFor(jwtSecret.getBytes());
 			Jwts.parserBuilder()
 				.setSigningKey(sKey)
 				.build()
