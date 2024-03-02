@@ -34,15 +34,15 @@ public class WebSecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors(Customizer.withDefaults()) //habilita o cors
-            .csrf(csrf -> csrf.disable()) //desabilita o csrf
-            .exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandler)) //configura a classe para tratamento da excecao de autenticacao
-            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //define a politica de sessao
-            .authorizeHttpRequests(auth -> auth
+            .authorizeHttpRequests(login -> login
             		.requestMatchers("/login/**", "/h2-console/**", "/roles/**", "/swagger-ui/**", "/v3/api-docs/**", "/actuator/**").permitAll() //define as rotas publicas/abertas
                     //.requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/actuator/**").hasRole("ADMIN") // autoriza o acesso a rotas por perfil
                     //.requestMatchers("/test/user/**").hasAnyRole("USER", "ADMIN") //autoriza o acesso a rotas por perfis
                     .anyRequest().authenticated()) //demais rotas, nao configuradas acima, so poderao ser acessadas mediante autenticacao
+            .cors(Customizer.withDefaults()) //habilita o cors
+            .csrf(csrf -> csrf.disable()) //desabilita o csrf
+            .exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandler)) //configura a classe para tratamento da excecao de autenticacao
+            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //define a politica de sessao
 		;		
 		
 		http.authenticationProvider(authenticationProvider()); //define o provedor de autenticacao
@@ -55,7 +55,8 @@ public class WebSecurityConfig {
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList("*"));
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
+		configuration.setAllowedHeaders(Arrays.asList("content-type", "authorization"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;

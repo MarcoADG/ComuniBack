@@ -57,4 +57,13 @@ public class JwtResponseDTO {
 	public String getApelido() {
 		return apelido;
 	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
+	public void setApelido(String apelido) {
+		this.apelido = apelido;
+	}
+	
 }

@@ -52,7 +52,7 @@ public class LoginController {
 
 	    SecurityContextHolder.getContext().setAuthentication(authentication);
 	    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-	    String jwt = jwtUtils.generateToken(userDetails.getUsername(), userDetails.getId(), userDetails.getApelido(), userDetails.getCargo());
+	    String jwt = jwtUtils.generateToken(userDetails.getUsername(), userDetails.getId(), userDetails.getCargo(), userDetails.getApelido());
 
 	    List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 	            .collect(Collectors.toList());
