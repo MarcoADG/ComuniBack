@@ -16,7 +16,7 @@ public class AvisoMembros {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "avisosMembroId")
+    @Column(name = "avisos_membro_id")
     private Integer avisosMembroId;
 	
 	@NotNull
@@ -24,15 +24,15 @@ public class AvisoMembros {
 	private Boolean estado;
 	
 	@ManyToOne
-	@JoinColumn (name = "idMembro", referencedColumnName = "membroId")
+	@JoinColumn (name = "id_membro", referencedColumnName = "membro_id")
 	private Membro membro;
 	
 	@ManyToOne
-	@JoinColumn (name = "idComunidade", referencedColumnName = "comunidadeId")
+	@JoinColumn (name = "id_comunidade", referencedColumnName = "comunidade_id")
 	private Comunidade comunidade;
 	
 	@ManyToOne
-	@JoinColumn (name = "idAviso", referencedColumnName = "avisoId")
+	@JoinColumn (name = "id_aviso", referencedColumnName = "aviso_id")
 	private Aviso aviso;
 
 	public Integer getAvisosMembroId() {

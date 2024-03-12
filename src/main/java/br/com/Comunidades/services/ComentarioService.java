@@ -1,10 +1,12 @@
 package br.com.Comunidades.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.Comunidades.DTO.ComentarioResponseDTO;
 import br.com.Comunidades.entities.Comentario;
 import br.com.Comunidades.repositories.ComentarioRepository;
 
@@ -14,12 +16,14 @@ public class ComentarioService {
 	@Autowired
 	ComentarioRepository comentarioRep;
 	
-	public List<Comentario> listarComentarios(){
-		return comentarioRep.findAll();
+	public List<ComentarioResponseDTO> listarComentarios() {
+		List<Comentario> comentario = comentarioRep.findAll();
+		return comentario.stream().map(this::converterParaDTO).collect(Collectors.toList());
 	}
-	
-	public Comentario buscarComentarioPorId(Integer comentarioId) {
-		return comentarioRep.findById(comentarioId).orElseThrow(()-> new RuntimeException("Comentario não encontrado"));
+
+	public ComentarioResponseDTO buscarComentarioPorId(Integer comentarioId) {
+		Comentario comentario = comentarioRep.findById(comentarioId).orElseThrow(() -> new RuntimeException("Comentario não encontrada"));
+		return converterParaDTO(comentario);
 	}
 	
 	public Comentario novoComentario(Comentario comentario) {
@@ -32,5 +36,9 @@ public class ComentarioService {
 	
 	public void deletarComentario(Integer id) {
 		comentarioRep.deleteById(id);
+	}
+	
+	private ComentarioResponseDTO converterParaDTO(Comentario comentario) {
+		return new ComentarioResponseDTO(comentario.getComentarioId(), comentario.getComentario(), comentario.getDataHora());
 	}
 }

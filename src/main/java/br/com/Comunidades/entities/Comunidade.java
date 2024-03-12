@@ -14,12 +14,12 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(name = "comunidades")
 public class Comunidade {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comunidadeId")
-    private Integer comunidadeId;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "comunidade_id")
+	private Integer comunidadeId;
+
 	@NotNull
 	@Column(name = "tema")
 	private String tema;
@@ -27,26 +27,25 @@ public class Comunidade {
 	@NotNull
 	@Column(name = "lider")
 	private String lider;
-	
+
 	@NotNull
 	@Column(name = "imagem")
 	private String imagem;
-	
-	@NotNull
+
 	@Column(name = "estado")
 	private Boolean estado;
-	
+
 	@OneToMany(mappedBy = "comunidade")
 	private List<Membro> membro;
-	
+
 	@OneToMany(mappedBy = "comunidade")
-    private List<Regra> regra;
-	
+	private List<Regra> regra;
+
 	@OneToMany(mappedBy = "comunidade")
-    private List<Reuniao> reuniao;
-	
+	private List<Reuniao> reuniao;
+
 	@OneToMany(mappedBy = "comunidade")
-    private List<AvisoMembros> avisoMembros;
+	private List<AvisoMembros> avisoMembros;
 
 	public Integer getComunidadeId() {
 		return comunidadeId;
@@ -121,7 +120,7 @@ public class Comunidade {
 	}
 
 	public Comunidade(Integer comunidadeId, @NotNull String tema, @NotNull String lider, @NotNull String imagem,
-			@NotNull Boolean estado, List<Membro> membro, List<Regra> regra, List<Reuniao> reuniao,
+			Boolean estado, List<Membro> membro, List<Regra> regra, List<Reuniao> reuniao,
 			List<AvisoMembros> avisoMembros) {
 		super();
 		this.comunidadeId = comunidadeId;
@@ -138,5 +137,5 @@ public class Comunidade {
 	public Comunidade() {
 		super();
 	}
-	
+
 }

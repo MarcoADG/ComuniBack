@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.Comunidades.DTO.ReuniaoResponseDTO;
 import br.com.Comunidades.entities.Reuniao;
 import br.com.Comunidades.services.ReuniaoService;
 
@@ -25,13 +26,13 @@ public class ReuniaoController {
 	ReuniaoService reuniaoServ;
 	
 	@GetMapping
-	public ResponseEntity<List<Reuniao>> listarReuniaos() {
+	public ResponseEntity<List<ReuniaoResponseDTO>> listarReuniaos() {
 		return new ResponseEntity<>(reuniaoServ.listarReuniaos(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscarReuniaoPorId(@PathVariable Integer id) {
-		Reuniao reuniao = reuniaoServ.buscarReuniaoPorId(id);
+		ReuniaoResponseDTO reuniao = reuniaoServ.buscarReuniaoPorId(id);
 		if (reuniao != null) {
 			return new ResponseEntity<>(reuniao, HttpStatus.OK);
 
@@ -47,7 +48,7 @@ public class ReuniaoController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizar(@PathVariable Integer id, @RequestBody Reuniao reuniao) {
-		Reuniao reuniaoAntigo = reuniaoServ.buscarReuniaoPorId(id);
+		ReuniaoResponseDTO reuniaoAntigo = reuniaoServ.buscarReuniaoPorId(id);
 		if (reuniaoAntigo != null) {
 			return new ResponseEntity<>(reuniaoServ.atualizarReuniao(id, reuniao), HttpStatus.OK);
 
@@ -59,7 +60,7 @@ public class ReuniaoController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deletar(@PathVariable Integer id) {
-		Reuniao reuniao = reuniaoServ.buscarReuniaoPorId(id);
+		ReuniaoResponseDTO reuniao = reuniaoServ.buscarReuniaoPorId(id);
 
 		if (reuniao != null) {
 			reuniaoServ.deletarReuniao(id);

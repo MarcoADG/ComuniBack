@@ -15,14 +15,14 @@ public class Regra {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "regraId")
+    @Column(name = "regra_id")
     private Integer regraId;
 	
 	@Column(name = "regra")
 	private String regra;
 	
 	@ManyToOne
-	@JoinColumn (name = "idComunidade", referencedColumnName = "comunidadeId")
+	@JoinColumn (name = "id_comunidade", referencedColumnName = "comunidade_id")
 	private Comunidade comunidade;
 
 	public Integer getRegraId() {

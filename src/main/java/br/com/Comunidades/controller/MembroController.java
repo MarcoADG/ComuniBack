@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.Comunidades.DTO.MembroResponseDTO;
 import br.com.Comunidades.entities.Membro;
 import br.com.Comunidades.services.MembroService;
 
@@ -25,13 +26,13 @@ public class MembroController {
 	MembroService membroServ;
 	
 	@GetMapping
-	public ResponseEntity<List<Membro>> listarMembros() {
+	public ResponseEntity<List<MembroResponseDTO>> listarMembros() {
 		return new ResponseEntity<>(membroServ.listarMembros(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscarMembroPorId(@PathVariable Integer id) {
-		Membro membro = membroServ.buscarMembroPorId(id);
+		MembroResponseDTO membro = membroServ.buscarMembroPorId(id);
 		if (membro != null) {
 			return new ResponseEntity<>(membro, HttpStatus.OK);
 
@@ -47,7 +48,7 @@ public class MembroController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizar(@PathVariable Integer id, @RequestBody Membro membro) {
-		Membro membroAntigo = membroServ.buscarMembroPorId(id);
+		MembroResponseDTO membroAntigo = membroServ.buscarMembroPorId(id);
 		if (membroAntigo != null) {
 			return new ResponseEntity<>(membroServ.atualizarMembro(id, membro), HttpStatus.OK);
 
@@ -59,7 +60,7 @@ public class MembroController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deletar(@PathVariable Integer id) {
-		Membro membro = membroServ.buscarMembroPorId(id);
+		MembroResponseDTO membro = membroServ.buscarMembroPorId(id);
 
 		if (membro != null) {
 			membroServ.deletarMembro(id);

@@ -18,7 +18,7 @@ public class Aviso {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "avisoId")
+	@Column(name = "aviso_id")
 	private Integer avisoId;
 
 	@NotNull
@@ -30,8 +30,11 @@ public class Aviso {
 	private String aviso;
 
 	@NotNull
-	@Column(name = "dataHora")
+	@Column(name = "data_hora")
 	private LocalDateTime dataHora;
+
+	@Column(name = "estado")
+	private Boolean estado;
 
 	@OneToMany(mappedBy = "aviso")
 	private List<AvisoMembros> avisoMembros;
@@ -76,18 +79,28 @@ public class Aviso {
 		this.avisoMembros = avisoMembros;
 	}
 
+	public Boolean getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Boolean estado) {
+		this.estado = estado;
+	}
+
 	public Aviso(Integer avisoId, @NotNull String titulo, @NotNull String aviso, @NotNull LocalDateTime dataHora,
-			List<AvisoMembros> avisoMembros) {
+			Boolean estado, List<AvisoMembros> avisoMembros) {
 		super();
 		this.avisoId = avisoId;
 		this.titulo = titulo;
 		this.aviso = aviso;
 		this.dataHora = dataHora;
+		this.estado = estado;
 		this.avisoMembros = avisoMembros;
 	}
 
 	public Aviso() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 }

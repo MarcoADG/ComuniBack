@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.Comunidades.DTO.ComunidadeResponseDTO;
 import br.com.Comunidades.entities.Comunidade;
 import br.com.Comunidades.services.ComunidadeService;
 
@@ -25,13 +26,13 @@ public class ComunidadeController {
 	ComunidadeService comunidadeServ;
 	
 	@GetMapping
-	public ResponseEntity<List<Comunidade>> listarComunidades() {
+	public ResponseEntity<List<ComunidadeResponseDTO>> listarComunidades() {
 		return new ResponseEntity<>(comunidadeServ.listarComunidades(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscarComunidadePorId(@PathVariable Integer id) {
-		Comunidade comunidade = comunidadeServ.buscarComunidadePorId(id);
+		ComunidadeResponseDTO comunidade = comunidadeServ.buscarComunidadePorId(id);
 		if (comunidade != null) {
 			return new ResponseEntity<>(comunidade, HttpStatus.OK);
 
@@ -47,7 +48,7 @@ public class ComunidadeController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizar(@PathVariable Integer id, @RequestBody Comunidade comunidade) {
-		Comunidade comunidadeAntigo = comunidadeServ.buscarComunidadePorId(id);
+		ComunidadeResponseDTO comunidadeAntigo = comunidadeServ.buscarComunidadePorId(id);
 		if (comunidadeAntigo != null) {
 			return new ResponseEntity<>(comunidadeServ.atualizarComunidade(id, comunidade), HttpStatus.OK);
 
@@ -59,7 +60,7 @@ public class ComunidadeController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deletar(@PathVariable Integer id) {
-		Comunidade comunidade = comunidadeServ.buscarComunidadePorId(id);
+		ComunidadeResponseDTO comunidade = comunidadeServ.buscarComunidadePorId(id);
 
 		if (comunidade != null) {
 			comunidadeServ.deletarComunidade(id);

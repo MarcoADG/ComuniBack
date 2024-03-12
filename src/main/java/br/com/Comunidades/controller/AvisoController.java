@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.Comunidades.DTO.AvisoResponseDTO;
 import br.com.Comunidades.entities.Aviso;
 import br.com.Comunidades.services.AvisoService;
 
@@ -25,13 +26,13 @@ public class AvisoController {
 	AvisoService avisoServ;
 
 	@GetMapping
-	public ResponseEntity<List<Aviso>> listarAvisos() {
+	public ResponseEntity<List<AvisoResponseDTO>> listarAvisos() {
 		return new ResponseEntity<>(avisoServ.listarAvisos(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscarAvisoPorId(@PathVariable Integer id) {
-		Aviso aviso = avisoServ.buscarAvisoPorId(id);
+		AvisoResponseDTO aviso = avisoServ.buscarAvisoPorId(id);
 		if (aviso != null) {
 			return new ResponseEntity<>(aviso, HttpStatus.OK);
 
@@ -47,7 +48,7 @@ public class AvisoController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizar(@PathVariable Integer id, @RequestBody Aviso aviso) {
-		Aviso avisoAntigo = avisoServ.buscarAvisoPorId(id);
+		AvisoResponseDTO avisoAntigo = avisoServ.buscarAvisoPorId(id);
 		if (avisoAntigo != null) {
 			return new ResponseEntity<>(avisoServ.atualizarAviso(id, aviso), HttpStatus.OK);
 
@@ -59,7 +60,7 @@ public class AvisoController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deletar(@PathVariable Integer id) {
-		Aviso aviso = avisoServ.buscarAvisoPorId(id);
+		AvisoResponseDTO aviso = avisoServ.buscarAvisoPorId(id);
 
 		if (aviso != null) {
 			avisoServ.deletarAviso(id);

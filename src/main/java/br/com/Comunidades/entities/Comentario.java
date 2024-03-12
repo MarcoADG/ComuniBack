@@ -18,31 +18,31 @@ public class Comentario {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "avisoId")
-    private Integer avisoId;
+    @Column(name = "comentario_id")
+    private Integer comentarioId;
 	
 	@NotNull
     @Column(name = "comentario")
     private String comentario;
 	
 	@NotNull
-    @Column(name = "dataHora")
+    @Column(name = "data_hora")
     private LocalDateTime dataHora;
 	
 	@ManyToOne
-	@JoinColumn (name = "idMembro", referencedColumnName = "membroId")
+	@JoinColumn (name = "id_membro", referencedColumnName = "membro_id")
 	private Membro membro;
 	
 	@ManyToOne
-	@JoinColumn (name = "idReuniao", referencedColumnName = "reuniaoId")
+	@JoinColumn (name = "id_reuniao", referencedColumnName = "reuniao_id")
 	private Reuniao reuniao;
 
-	public Integer getAvisoId() {
-		return avisoId;
+	public Integer getComentarioId() {
+		return comentarioId;
 	}
 
-	public void setAvisoId(Integer avisoId) {
-		this.avisoId = avisoId;
+	public void setComentarioId(Integer avisoId) {
+		this.comentarioId = avisoId;
 	}
 
 	public String getComentario() {
@@ -77,10 +77,10 @@ public class Comentario {
 		this.reuniao = reuniao;
 	}
 
-	public Comentario(Integer avisoId, @NotNull String comentario, @NotNull LocalDateTime dataHora, Membro membro,
+	public Comentario(Integer comentarioId, @NotNull String comentario, @NotNull LocalDateTime dataHora, Membro membro,
 			Reuniao reuniao) {
 		super();
-		this.avisoId = avisoId;
+		this.comentarioId = comentarioId;
 		this.comentario = comentario;
 		this.dataHora = dataHora;
 		this.membro = membro;

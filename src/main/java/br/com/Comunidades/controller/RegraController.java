@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.Comunidades.DTO.RegraResponseDTO;
 import br.com.Comunidades.entities.Regra;
 import br.com.Comunidades.services.RegraService;
 
@@ -25,13 +26,13 @@ public class RegraController {
 	RegraService regraServ;
 	
 	@GetMapping
-	public ResponseEntity<List<Regra>> listarRegras() {
+	public ResponseEntity<List<RegraResponseDTO>> listarRegras() {
 		return new ResponseEntity<>(regraServ.listarRegras(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscarRegraPorId(@PathVariable Integer id) {
-		Regra regra = regraServ.buscarRegraPorId(id);
+		RegraResponseDTO regra = regraServ.buscarRegraPorId(id);
 		if (regra != null) {
 			return new ResponseEntity<>(regra, HttpStatus.OK);
 
@@ -47,7 +48,7 @@ public class RegraController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizar(@PathVariable Integer id, @RequestBody Regra regra) {
-		Regra regraAntigo = regraServ.buscarRegraPorId(id);
+		RegraResponseDTO regraAntigo = regraServ.buscarRegraPorId(id);
 		if (regraAntigo != null) {
 			return new ResponseEntity<>(regraServ.atualizarRegra(id, regra), HttpStatus.OK);
 
@@ -59,7 +60,7 @@ public class RegraController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deletar(@PathVariable Integer id) {
-		Regra regra = regraServ.buscarRegraPorId(id);
+		RegraResponseDTO regra = regraServ.buscarRegraPorId(id);
 
 		if (regra != null) {
 			regraServ.deletarRegra(id);

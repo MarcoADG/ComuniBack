@@ -19,7 +19,7 @@ public class Membro {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "membroId")
+    @Column(name = "membro_id")
     private Integer membroId;
 	
 	@NotNull
@@ -27,11 +27,11 @@ public class Membro {
 	private String nome;
 	
 	@ManyToOne
-	@JoinColumn (name = "idUsuario", referencedColumnName = "usuarioId")
+	@JoinColumn (name = "id_usuario", referencedColumnName = "usuario_id")
 	private Usuario usuario;
 	
 	@ManyToOne
-    @JoinColumn(name = "idComunidade", referencedColumnName = "comunidadeId")
+    @JoinColumn(name = "id_comunidade", referencedColumnName = "comunidade_id")
     private Comunidade comunidade;
 	
 	@OneToMany(mappedBy = "membro")

@@ -20,11 +20,11 @@ public class Reuniao {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "reuniaoId")
+	@Column(name = "reuniao_id")
 	private Integer reuniaoId;
 
 	@NotNull
-	@Column(name = "dataHora")
+	@Column(name = "data_hora")
 	private LocalDateTime dataHora;
 
 	@NotNull
@@ -56,7 +56,7 @@ public class Reuniao {
 	private Boolean estado;
 
 	@ManyToOne
-	@JoinColumn(name = "idComunidade", referencedColumnName = "comunidadeId")
+	@JoinColumn(name = "id_comunidade", referencedColumnName = "comunidade_id")
 	private Comunidade comunidade;
 
 	@OneToMany(mappedBy = "reuniao")

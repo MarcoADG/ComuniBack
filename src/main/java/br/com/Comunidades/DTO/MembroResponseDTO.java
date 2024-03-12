@@ -1,7 +1,8 @@
 package br.com.Comunidades.DTO;
 
-
 public class MembroResponseDTO {
+
+	private Integer membroId;
 
 	private String nome;
 
@@ -13,13 +14,22 @@ public class MembroResponseDTO {
 		this.nome = nome;
 	}
 
-	public MembroResponseDTO(String nome) {
+	public Integer getMembroId() {
+		return membroId;
+	}
+
+	public void setMembroId(Integer membroId) {
+		this.membroId = membroId;
+	}
+
+	public MembroResponseDTO(Integer membroId, String nome) {
 		super();
+		this.membroId = membroId;
 		this.nome = nome;
 	}
 
 	public MembroResponseDTO() {
 		super();
 	}
-	
+
 }

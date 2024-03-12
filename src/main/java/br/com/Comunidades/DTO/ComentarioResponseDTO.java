@@ -4,9 +4,11 @@ import java.time.LocalDateTime;
 
 public class ComentarioResponseDTO {
 
+	private Integer comentarioId;
+
 	private String comentario;
 
-    private LocalDateTime dataHora;
+	private LocalDateTime dataHora;
 
 	public String getComentario() {
 		return comentario;
@@ -24,14 +26,24 @@ public class ComentarioResponseDTO {
 		this.dataHora = dataHora;
 	}
 
-	public ComentarioResponseDTO(String comentario, LocalDateTime dataHora) {
+	public Integer getComentarioId() {
+		return comentarioId;
+	}
+
+	public void setComentarioId(Integer comentarioId) {
+		this.comentarioId = comentarioId;
+	}
+
+	public ComentarioResponseDTO(Integer comentarioId, String comentario, LocalDateTime dataHora) {
 		super();
+		this.comentarioId = comentarioId;
 		this.comentario = comentario;
 		this.dataHora = dataHora;
 	}
 
 	public ComentarioResponseDTO() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-    
+
 }

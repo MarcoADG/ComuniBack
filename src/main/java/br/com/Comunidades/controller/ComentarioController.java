@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.Comunidades.DTO.ComentarioResponseDTO;
 import br.com.Comunidades.entities.Comentario;
 import br.com.Comunidades.services.ComentarioService;
 
@@ -25,13 +26,13 @@ public class ComentarioController {
 	ComentarioService comentarioServ;
 	
 	@GetMapping
-	public ResponseEntity<List<Comentario>> listarComentarios() {
+	public ResponseEntity<List<ComentarioResponseDTO>> listarComentarios() {
 		return new ResponseEntity<>(comentarioServ.listarComentarios(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscarComentarioPorId(@PathVariable Integer id) {
-		Comentario comentario = comentarioServ.buscarComentarioPorId(id);
+		ComentarioResponseDTO comentario = comentarioServ.buscarComentarioPorId(id);
 		if (comentario != null) {
 			return new ResponseEntity<>(comentario, HttpStatus.OK);
 
@@ -47,7 +48,7 @@ public class ComentarioController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizar(@PathVariable Integer id, @RequestBody Comentario comentario) {
-		Comentario comentarioAntigo = comentarioServ.buscarComentarioPorId(id);
+		ComentarioResponseDTO comentarioAntigo = comentarioServ.buscarComentarioPorId(id);
 		if (comentarioAntigo != null) {
 			return new ResponseEntity<>(comentarioServ.atualizarComentario(id, comentario), HttpStatus.OK);
 
@@ -59,7 +60,7 @@ public class ComentarioController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deletar(@PathVariable Integer id) {
-		Comentario comentario = comentarioServ.buscarComentarioPorId(id);
+		ComentarioResponseDTO comentario = comentarioServ.buscarComentarioPorId(id);
 
 		if (comentario != null) {
 			comentarioServ.deletarComentario(id);

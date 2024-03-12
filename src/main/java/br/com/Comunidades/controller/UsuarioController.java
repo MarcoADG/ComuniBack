@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.Comunidades.DTO.UsuarioResponseDTO;
 import br.com.Comunidades.entities.Usuario;
 import br.com.Comunidades.services.UsuarioService;
 
@@ -24,13 +25,14 @@ public class UsuarioController {
 	UsuarioService usuarioServ;
 	
 	@GetMapping
-	public ResponseEntity<List<Usuario>> listarUsuarios() {
-		return new ResponseEntity<>(usuarioServ.listarUsuarios(), HttpStatus.OK);
-	}
+    public ResponseEntity<List<UsuarioResponseDTO>> listarUsuarios() {
+        List<UsuarioResponseDTO> usuarios = usuarioServ.listarUsuarios();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscarUsuarioPorId(@PathVariable Integer id) {
-		Usuario usuario = usuarioServ.buscarUsuarioPorId(id);
+		UsuarioResponseDTO usuario = usuarioServ.buscarUsuarioPorId(id);
 		if (usuario != null) {
 			return new ResponseEntity<>(usuario, HttpStatus.OK);
 
@@ -41,7 +43,7 @@ public class UsuarioController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizar(@PathVariable Integer id, @RequestBody Usuario usuario) {
-		Usuario usuarioAntigo = usuarioServ.buscarUsuarioPorId(id);
+		UsuarioResponseDTO usuarioAntigo = usuarioServ.buscarUsuarioPorId(id);
 		if (usuarioAntigo != null) {
 			return new ResponseEntity<>(usuarioServ.atualizarUsuario(id, usuario), HttpStatus.OK);
 
@@ -53,7 +55,7 @@ public class UsuarioController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deletar(@PathVariable Integer id) {
-		Usuario usuario = usuarioServ.buscarUsuarioPorId(id);
+		UsuarioResponseDTO usuario = usuarioServ.buscarUsuarioPorId(id);
 
 		if (usuario != null) {
 			usuarioServ.deletarUsuario(id);
